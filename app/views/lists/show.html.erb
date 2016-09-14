@@ -1,0 +1,3 @@
+<h1><%= @list.title %></h1>
+<p><%= @list.description %></p>
+<%= link_to "Delete", lists_path(@list), method: :delete, data: { confirm: "Delete?" } %>
