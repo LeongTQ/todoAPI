@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
 
+  root to: 'landing#index'
+
   resources :lists, except: [:show] do
     resources :tasks, except: [:show]
   end
 
-  root to: 'landing#index'
+  patch :completed, to: 'tasks#completed'
 
 end

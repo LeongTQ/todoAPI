@@ -1,9 +1,13 @@
 <h1>Tasks</h1>
 
 <% @tasks.each do |task| %>
-  <div class="task">
-    <h5><%= task.description %></h5>
 
+  <div class="task">
+    <h5> <%= task.description %></h5>
+    <!-- <h5> <span style="text-decoration: line-through;"> <%= task.description %></span></h5> -->
+
+    <%= link_to ("Completed"), completed_path(list_id: @list.id, task_id: task.id), method: :patch %>
+      <p style="opacity: 0.4;"><strike><%= task.description %></strike></p>
     <%= link_to ("Edit"), edit_list_task_path(@list, task), :class => "btn btn-warning" %>
     <%= link_to ("Delete"), list_task_path(@list, task), method: :delete, data: { confirm: "Delete?" }, :class => "btn btn-warning" %>
   </div>

@@ -1,8 +1,11 @@
 class TasksController < ApplicationController
+
   def index
     @list = List.includes(:tasks).find_by(id: params[:list_id])
     @tasks = @list.tasks.order("created_at DESC")
     @task = Task.new
+    @incompleted_task = Task.where(completed: false)
+    @completed_task = Task.where(completed: true)
   end
 
   def new
@@ -38,6 +41,17 @@ class TasksController < ApplicationController
     else
       flash[:danger] = @task.errors.full_messages
       redirect_to edit_list_task_path(@list, @task)
+    end
+  end
+
+  def completed
+
+    @task = Task.find_by(id: params[:task_id])
+    @list = List.find_by(id: params[:list_id])
+
+    if @task.update_attribute(:completed, true)
+    flash[:success] = "Task completed"
+    redirect_to list_tasks_path(@list, @task)
     end
   end
 
